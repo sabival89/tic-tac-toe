@@ -1,13 +1,10 @@
-import React from 'react';
+import React from 'react'; 
+import Game from './Game';
 import './App.css';
 
-const App: React.FunctionComponent = () => {
+const App = () => {
   return (
-    <div className="App">
-      <header>
-        <h2>Tic-Tac-Toe</h2>
-      </header>
-    </div>
+    <Game />
   );
 }
 

@@ -1,0 +1,146 @@
+import React, { useState } from "react";
+import Board from "./Board";
+import { GameProps } from "./TypeProps";
+
+const Game = (props:GameProps) => {
+  /**
+   * Game's state declarations
+   */
+  const [history, setHistory] = useState(props.historyVal);
+  const [stepNumber, setStepNumber] = useState(props.stepNumberVal);
+  const [xIsNext, setXisNext] = useState(props.xIsNextVal);
+  const [counter, setCounter] = useState(history.length);
+
+  /**
+   * Handle each board's cell action when clicked
+   * @param {*} i
+   */
+  const handleClick = (i: number) => {
+    console.log('Handle CLick', i)
+    const gameHistory = history.slice(0, stepNumber + 1);
+    const current = gameHistory[gameHistory.length - 1];
+    const squares = current.squares.slice();
+
+    // Prevent further cell clicks after winning
+    if (calculateWinner(squares) || squares[i]) return;
+
+    squares[i] = xIsNext ? "X" : "O";
+
+    setHistory(gameHistory.concat([{ squares: squares }]));
+    setCounter(history.length);
+    setStepNumber(gameHistory.length);
+    setXisNext((prevXisNext) => !prevXisNext);
+  };
+
+  /**
+   * Reset game
+   */
+  const reset = () => {
+    setHistory(props.historyVal);
+    setCounter(history.length);
+    setStepNumber(props.stepNumberVal);
+    setXisNext(props.xIsNextVal);
+  };
+
+  /**
+   * Go to previous Move
+   */
+  const prevMove = () => {
+    if (stepNumber === 0) return;
+    setStepNumber((prevStep) => prevStep - 1);
+    setXisNext((next) => !next);
+  };
+
+  /**
+   * Go to next move
+   */
+  const nextMove = () => {
+    if (stepNumber >= counter || counter === 1) return;
+    setStepNumber((prevStep) => prevStep + 1);
+    setXisNext((next) => !next);
+  };
+
+  /**
+   * Update time travel steps with step number
+   * @param {*} step
+   */
+  const jumpTo = (step: number) => {
+    setStepNumber(step);
+    setXisNext(step % 2 === 0);
+  };
+
+  const gameHistory = history;
+  const current = gameHistory[stepNumber];
+  const winner = calculateWinner(current.squares);
+  const moves = gameHistory.map((step, move) => {
+    const desc = move ? "Go to move #" + move : "Go to game start";
+    return (
+      <li key={move}>
+        <button onClick={() => jumpTo(move)}>{desc}</button>
+      </li>
+    );
+  });
+
+  const status: string = winner
+    ? "Winner: " + winner
+    : "Next player:  " + (xIsNext ? "X" : "O");
+
+  /**
+   * Render UI
+   */
+  return (
+    <div className="game">
+      <div className="game-board">
+        <Board squares={current.squares} handleClick={(i) => handleClick(i)} />
+      </div>
+      <div className="game-info">
+        <div>{status}</div>
+        <div style={{ display: stepNumber > 0 ? "block" : "none" }}>
+          {moves}
+        </div>
+        <div>
+          <button name="prevMove" onClick={prevMove}>
+            Prev
+          </button>
+          <button name="nextMove" onClick={nextMove}>
+            Next
+          </button>
+          <button onClick={reset}>Restart</button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+/**
+ * Calculate game winner
+ * @param {*} squares
+ */
+function calculateWinner(squares: Array<string>) {
+  const lines: Array<Array<number>> = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6]
+  ];
+  for (let i = 0; i < lines.length; i++) {
+    const [a, b, c] = lines[i];
+    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+      return squares[a];
+    }
+  }
+  return null;
+}
+
+Game.defaultProps = {
+  historyVal: [{ squares: Array(9).fill(null) }],
+  stepNumberVal: 0,
+  counterVal: 0,
+  xIsNextVal: true
+};
+
+export default Game;
