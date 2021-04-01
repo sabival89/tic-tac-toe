@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Board from "./Board";
-import { GameProps } from "../Types/TypeProps";
+import { GameProps, isNotNull } from "../Types/TypeProps";
 import GameInfo from './GameInfo';
 /**
  * Handle Game logic
@@ -76,9 +76,41 @@ const Game = (props:GameProps) => {
     setXisNext(step % 2 === 0);
   };
 
+    /**
+   * Calculate game winner
+   * @param {*} squares
+   */
+  const calculateWinner = (squares: Array<string>) => {
+    const lines: Array<Array<number>> = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      [0, 4, 8],
+      [2, 4, 6]
+    ];
+    for (let i = 0; i < lines.length; i++) {
+      const [a, b, c] = lines[i];
+      if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+        return {winner: squares[a], position: [a,b,c]} ;
+      }
+    }
+    return false;
+  }
+
+  // Get total game play history
   const gameHistory = history;
+
+  // Get the current step from the history
   const current = gameHistory[stepNumber];
-  const winner = calculateWinner(current.squares);
+
+  // Type guard to ensure return val is not false
+  const isNotNullVal = isNotNull(calculateWinner(current.squares));
+
+  // Get the game winner string val
+  const {winner, position}: any = isNotNullVal && calculateWinner(current.squares);
 
   // Generate moves buttons
   const moves = gameHistory.map((step, move) => {
@@ -127,7 +159,7 @@ const Game = (props:GameProps) => {
       </div>
 
       <div className="game-board">
-        <Board squares={current.squares} handleClick={(i) => handleClick(i)} />
+        <Board squares={current.squares} handleClick={(i) => handleClick(i)} position={position}/>
       </div>
 
       <div className="footer">
@@ -136,30 +168,6 @@ const Game = (props:GameProps) => {
     </div>
   );
 };
-
-/**
- * Calculate game winner
- * @param {*} squares
- */
-function calculateWinner(squares: Array<string>) {
-  const lines: Array<Array<number>> = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6]
-  ];
-  for (let i = 0; i < lines.length; i++) {
-    const [a, b, c] = lines[i];
-    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-      return squares[a];
-    }
-  }
-  return null;
-}
 
 /**
  * Default state properties and values

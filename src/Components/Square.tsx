@@ -15,9 +15,9 @@ const Square: React.FC<SquareProps> = (props: SquareProps) => {
   const extendHandleClick = (event:any) => {
     props.handleClick(event)
   }
-
+  
   return (
-    <button className="square" onClick={extendHandleClick.bind(this)}>
+    <button className={props.isWinnerCell ? "square"  : ""} onClick={extendHandleClick.bind(this)}>
       {props.value || <span className="btn-placeholder">?</span>}
     </button>
   );

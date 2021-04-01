@@ -12,13 +12,24 @@ const Board: React.FC<SquareProps> = (props) => {
   // Number of cells to display on the game board
   const numberOfCells = 9;
 
+  // Group of numbers that identify each winning cell
+  const position = props.position;
+
   /**
    * Create cell template and properties
    * @param i 
    * @returns 
    */
   const renderSquare = (i: number) => {
-    return <Square value={props.squares[i]} handleClick={() => props.handleClick(i)} squares={[]}/>;
+    // Check if any of the cells is part of the winning cell and pass down the boolean value
+    const winnerCell: boolean | undefined = position?.filter(item => item === i).length ? true : false;
+
+    return <Square 
+              value={props.squares[i]} 
+              handleClick={() => props.handleClick(i)} 
+              squares={[]} 
+              isWinnerCell={winnerCell}
+            />;
   };
 
   // Fill game board with the number of generated cells
@@ -28,6 +39,8 @@ const Board: React.FC<SquareProps> = (props) => {
     </div>
   ));
 
+ 
+  // Render new Square component
   return <div className="game-grid-container">{template}</div>;
 }
 
