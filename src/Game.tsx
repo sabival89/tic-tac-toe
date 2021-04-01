@@ -21,10 +21,10 @@ const Game = (props:GameProps) => {
    * @param {*} i
    */
   const handleClick = (i: number) => {
-    console.log('Handle CLick', i)
     const gameHistory = history.slice(0, stepNumber + 1);
     const current = gameHistory[gameHistory.length - 1];
     const squares = current.squares.slice();
+    
 
     // Prevent further cell clicks after winning
     if (calculateWinner(squares) || squares[i]) return;
@@ -99,6 +99,12 @@ const Game = (props:GameProps) => {
   // Get current date - To be used in Footer
   const date = new Date();
 
+  console.log(gameWinner, gameHistory.length-1)
+
+  const isGameOver = () => {
+    return gameHistory.length-1 === 9 && gameWinner === '';
+  }
+
   /**
    * Render UI
    */
@@ -107,7 +113,8 @@ const Game = (props:GameProps) => {
       <h1>Tic Tac Toe</h1>
       <div className="game-info">
         <span style={{display: gameWinner ? 'block' : "none"}} className="game-info-status-winner">{gameWinner}</span>
-        <span style={{display: status ? 'block' : 'none'}} className="game-info-status">{status}</span>
+        <span style={{display: status && !isGameOver() ? 'block' : 'none'}} className="game-info-status">{status}</span>
+        <span style={{display: isGameOver() ? 'block' : 'none'}} className="game-info-gameover">{isGameOver() &&  `Game Over`}</span>
         
         <div className="game-info-buttons">
           <button onClick={reset}>	

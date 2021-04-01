@@ -15,7 +15,7 @@ button:focus {
 body {
   margin: 0;
   padding: 0;
-  background: rgb(0, 59, 134);
+  background: rgb(0, 63, 183);
   font: 14px 'Segoe UI Light', 'Century Gothic', Futura, sans-serif;
 }
 
@@ -60,6 +60,8 @@ div.game-container > h1 {
   text-align: center;
   margin: 10px 0;
   position: relative;
+  color: #ffffff;
+  z-index: 2;
 }
 
 div.game-container > h1:after,
@@ -74,6 +76,7 @@ div.game-container > h1:before {
   border-left: none;
   width: 50%;
   padding: 5px;
+  z-index: -1;
 }
 
 div.game-container > h1:after {
@@ -94,6 +97,7 @@ div.game-info {
   margin: 0 0 20px 0;
 }
 
+div.game-info > span.game-info-gameover,
 div.game-info > span.game-info-status-winner,
 div.game-info > span.game-info-status {
   display: block;
