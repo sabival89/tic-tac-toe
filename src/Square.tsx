@@ -7,6 +7,10 @@ import {SquareProps} from './TypeProps'
  */
 const Square: React.FC<SquareProps> = (props) => {
 
+  /**
+   * Handle action for each cell when clicked
+   * @param event 
+   */
   const extendHandleClick = (event:any) => {
     props.handleClick(event)
   }

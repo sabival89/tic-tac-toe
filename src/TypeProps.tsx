@@ -1,4 +1,6 @@
-
+/**
+ * Typed properties for cell buttons 
+ */
 export type SquareProps = {
     value?: string;
     squares: Array<string>;
@@ -6,8 +8,9 @@ export type SquareProps = {
     handleClick: (i: number) => void;
 }
 
-// [{ squares: Array(9).fill(null) }],
-
+/**
+ * Type properties for Game component state values
+ */
 export type GameProps = {
     historyVal: Array<{squares: Array<string>}>;
     stepNumberVal: number;

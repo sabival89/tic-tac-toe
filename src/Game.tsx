@@ -2,6 +2,11 @@ import React, { useState } from "react";
 import Board from "./Board";
 import { GameProps } from "./TypeProps";
 
+/**
+ * Handle Game logic
+ * @param props 
+ * @returns 
+ */
 const Game = (props:GameProps) => {
   /**
    * Game's state declarations
@@ -24,8 +29,10 @@ const Game = (props:GameProps) => {
     // Prevent further cell clicks after winning
     if (calculateWinner(squares) || squares[i]) return;
 
+    // Determine next player
     squares[i] = xIsNext ? "X" : "O";
 
+    // Update states
     setHistory(gameHistory.concat([{ squares: squares }]));
     setCounter(history.length);
     setStepNumber(gameHistory.length);
@@ -37,7 +44,7 @@ const Game = (props:GameProps) => {
    */
   const reset = () => {
     setHistory(props.historyVal);
-    setCounter(history.length);
+    setCounter(1);
     setStepNumber(props.stepNumberVal);
     setXisNext(props.xIsNextVal);
   };
@@ -72,6 +79,8 @@ const Game = (props:GameProps) => {
   const gameHistory = history;
   const current = gameHistory[stepNumber];
   const winner = calculateWinner(current.squares);
+
+  // Generate moves buttons
   const moves = gameHistory.map((step, move) => {
     const desc = move ?  move : ``;
     return (
@@ -81,10 +90,13 @@ const Game = (props:GameProps) => {
     );
   });
 
+  // Determine player turns
   const status: string = winner ? `` : (xIsNext ? "X" : "O");
 
+  // Determine Winner
   const gameWinner: string = !winner ? `` : `${winner}`;
 
+  // Get current date - To be used in Footer
   const date = new Date();
 
   /**
@@ -150,6 +162,9 @@ function calculateWinner(squares: Array<string>) {
   return null;
 }
 
+/**
+ * Default state properties and values
+ */
 Game.defaultProps = {
   historyVal: [{ squares: Array(9).fill(null) }],
   stepNumberVal: 0,

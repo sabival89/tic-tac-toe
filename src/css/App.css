@@ -1,8 +1,13 @@
+/* Reset block elements */
 * {
   margin: 0;
   padding: 0;
 }
 
+/*========================================= 
+  Disable defaut focus on button elements =
+  =========================================
+*/
 button:focus {
   outline: none;
 }
@@ -10,40 +15,50 @@ button:focus {
 body {
   margin: 0;
   padding: 0;
+  background: rgb(0, 59, 134);
   font: 14px 'Segoe UI Light', 'Century Gothic', Futura, sans-serif;
 }
 
+/*======================== 
+  Main Container styling =
+  ========================
+*/
 main.container {
   background: rgb(0, 59, 134);
   background: linear-gradient(
     12deg,
     rgba(0, 59, 134, 1) 0%,
-    rgba(9, 56, 168, 1) 0%,
-    rgba(22, 112, 130, 1) 100%
+    rgba(0, 55, 185, 1) 0%,
+    rgba(0, 136, 163, 1) 100%
   );
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  left: 0;
+  background-position: center;
+  background-size: cover;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   color: #ffffff;
-  height: 100%;
+  height: 100vh;
 }
 
+/*========================
+  Game Container Styling = 
+  ========================
+*/
 div.game-container {
-  min-width: 200px;
+  min-width: 100px;
   max-width: 420px;
   flex: auto;
 }
 
+/*=============================
+  Game header caption styling =
+  =============================
+*/
 div.game-container > h1 {
   font-weight: 700;
   font-size: 4rem;
   text-align: center;
-  margin: 15px 0 30px 0;
+  margin: 10px 0;
   position: relative;
 }
 
@@ -71,6 +86,10 @@ div.game-container > h1:before {
   left: 10%;
 }
 
+/*===========================
+  Game Info Section Styling =
+  ===========================
+*/
 div.game-info {
   margin: 0 0 20px 0;
 }
@@ -107,6 +126,10 @@ div.game-info > span.game-info-status:after {
   content: "'s turn";
 }
 
+/*=========================== 
+  Game Info buttons Styling =
+  ===========================
+*/
 div.game-info-buttons {
   display: flex;
   flex-wrap: wrap;
@@ -198,7 +221,7 @@ div.game-info-buttons button > span > span {
 
 div.game-info-buttons button > span > span:before {
   position: absolute;
-  top: -2rem;
+  top: 2rem;
   left: -1rem;
   content: '';
   padding: 0px;
@@ -220,6 +243,10 @@ div.game-info-buttons button:hover > span > span::before {
   visibility: visible;
 }
 
+/*====================
+  Game board Styling =
+  ====================
+*/
 div.game-board {
   display: flex;
   justify-content: center;
@@ -229,6 +256,10 @@ div.game-board {
   border-radius: 5px;
 }
 
+/*===================
+  Game Grid Styling =
+  ===================
+*/
 div.game-grid-container {
   width: 100%;
   display: grid;
@@ -280,9 +311,14 @@ div.game-grid-container div.game-grid-item:hover {
 }
 
 div.game-grid-container div.game-grid-item:hover span.btn-placeholder {
-  transform: scale(1.5) translate(0px, 10px) rotate(20deg);
-  font-size: 300px;
+  transform: scale(2) translate(0px, 10px) rotate(20deg);
+  font-size: 150px;
 }
+
+/*================
+  Footer Styling =
+  ================
+*/
 div.footer {
   margin: 5px 0;
 }
@@ -294,6 +330,10 @@ div.footer span {
   padding: 10px 0;
 }
 
+/*==================================
+  Device variations Responsiveness =
+  ==================================
+*/
 @media screen and (min-width: 1500px) {
   /* div.game-container {
     min-width: 200px;
