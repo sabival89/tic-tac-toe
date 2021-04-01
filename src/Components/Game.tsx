@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Board from "./Board";
-import { GameProps } from "./TypeProps";
+import { GameProps } from "../Types/TypeProps";
 
 /**
  * Handle Game logic
@@ -136,6 +136,7 @@ const Game = (props:GameProps) => {
           </button>
         </div>
       </div>
+
       <div className="game-board">
         <Board squares={current.squares} handleClick={(i) => handleClick(i)} />
       </div>

@@ -1,5 +1,5 @@
 import React from "react";
-import {SquareProps} from './TypeProps'
+import {SquareProps} from '../Types/TypeProps'
 import Square from "./Square";
 
 /**
