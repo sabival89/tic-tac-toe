@@ -73,40 +73,54 @@ const Game = (props:GameProps) => {
   const current = gameHistory[stepNumber];
   const winner = calculateWinner(current.squares);
   const moves = gameHistory.map((step, move) => {
-    const desc = move ? "Go to move #" + move : "Go to game start";
+    const desc = move ?  move : ``;
     return (
-      <li key={move}>
+      <li style={{display: move <= 0 ? 'none' : 'block'}} key={move}>
         <button onClick={() => jumpTo(move)}>{desc}</button>
       </li>
     );
   });
 
-  const status: string = winner
-    ? "Winner: " + winner
-    : "Next player:  " + (xIsNext ? "X" : "O");
+  const status: string = winner ? `` : (xIsNext ? "X" : "O");
+
+  const gameWinner: string = !winner ? `` : `${winner}`;
+
+  const date = new Date();
 
   /**
    * Render UI
    */
   return (
-    <div className="game">
+    <div className="game-container">
+      <h1>Tic Tac Toe</h1>
+      <div className="game-info">
+        <span style={{display: gameWinner ? 'block' : "none"}} className="game-info-status-winner">{gameWinner}</span>
+        <span style={{display: status ? 'block' : 'none'}} className="game-info-status">{status}</span>
+        
+        <div className="game-info-buttons">
+          <button onClick={reset}>	
+            <span className="reset">&#128472;<span></span></span>
+            
+            </button>
+          <button name="prevMove" onClick={prevMove}>
+            <span className="prev">&#171;<span></span></span>
+          </button>
+          <div className="moves-btn" style={{ display: stepNumber > 0 ? "block" : "none" }}>
+            <ul>
+              {moves}
+            </ul>
+          </div>
+          <button name="nextMove" onClick={nextMove}>
+            <span className="next">&#187;<span></span></span>
+          </button>
+        </div>
+      </div>
       <div className="game-board">
         <Board squares={current.squares} handleClick={(i) => handleClick(i)} />
       </div>
-      <div className="game-info">
-        <div>{status}</div>
-        <div style={{ display: stepNumber > 0 ? "block" : "none" }}>
-          {moves}
-        </div>
-        <div>
-          <button name="prevMove" onClick={prevMove}>
-            Prev
-          </button>
-          <button name="nextMove" onClick={nextMove}>
-            Next
-          </button>
-          <button onClick={reset}>Restart</button>
-        </div>
+
+      <div className="footer">
+        <span>&copy; {date.getFullYear()}. Game Demo Inc</span>
       </div>
     </div>
   );

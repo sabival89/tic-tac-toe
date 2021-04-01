@@ -1,10 +1,13 @@
-import React from 'react'; 
+
 import Game from './Game';
-import './App.css';
+import './css/App.css';
 
 const App = () => {
   return (
-    <Game />
+    <main className="container">
+      <Game />
+    </main>
+    
   );
 }
 

@@ -8,16 +8,12 @@ import {SquareProps} from './TypeProps'
 const Square: React.FC<SquareProps> = (props) => {
 
   const extendHandleClick = (event:any) => {
-    console.log(event)
     props.handleClick(event)
   }
 
   return (
-
-    // <button onClick={clickMe}>Click Me!</button>
-    
     <button className="square" onClick={extendHandleClick.bind(this)}>
-      {props.value}
+      {props.value || <span className="btn-placeholder">?</span>}
     </button>
   );
 }

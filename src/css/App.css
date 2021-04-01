@@ -1,0 +1,303 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+button:focus {
+  outline: none;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font: 14px 'Segoe UI Light', 'Century Gothic', Futura, sans-serif;
+}
+
+main.container {
+  background: rgb(0, 59, 134);
+  background: linear-gradient(
+    12deg,
+    rgba(0, 59, 134, 1) 0%,
+    rgba(9, 56, 168, 1) 0%,
+    rgba(22, 112, 130, 1) 100%
+  );
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  color: #ffffff;
+  height: 100%;
+}
+
+div.game-container {
+  min-width: 200px;
+  max-width: 420px;
+  flex: auto;
+}
+
+div.game-container > h1 {
+  font-weight: 700;
+  font-size: 4rem;
+  text-align: center;
+  margin: 15px 0 30px 0;
+  position: relative;
+}
+
+div.game-container > h1:after,
+div.game-container > h1:before {
+  position: absolute;
+  content: '';
+  height: 5px;
+  margin: 10px 0;
+  display: block;
+  border: 10px solid rgba(0, 0, 0, 0.07);
+  border-right: none;
+  border-left: none;
+  width: 50%;
+  padding: 5px;
+}
+
+div.game-container > h1:after {
+  right: 10%;
+  bottom: -15px;
+}
+
+div.game-container > h1:before {
+  top: 5px;
+  left: 10%;
+}
+
+div.game-info {
+  margin: 0 0 20px 0;
+}
+
+div.game-info > span.game-info-status-winner,
+div.game-info > span.game-info-status {
+  display: block;
+  padding: 2rem 0;
+  text-align: center;
+  font-size: 32px;
+  font-weight: 500;
+}
+
+div.game-info > span.game-info-status-winner:before,
+div.game-info > span.game-info-status-winner:after,
+div.game-info > span.game-info-status:before,
+div.game-info > span.game-info-status:after {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+div.game-info > span.game-info-status-winner:before {
+  content: 'Player ';
+}
+
+div.game-info > span.game-info-status-winner:after {
+  content: ' is the winner';
+}
+
+div.game-info > span.game-info-status:before {
+  content: 'Player ';
+}
+
+div.game-info > span.game-info-status:after {
+  content: "'s turn";
+}
+
+div.game-info-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 10px 0;
+  width: 100%;
+}
+
+div.game-info-buttons button {
+  display: block;
+  position: relative;
+  padding: 8px 13px;
+  line-height: 1.5em;
+  border: none;
+  background: rgba(0, 0, 0, 0.07);
+  color: #ffffff;
+  cursor: pointer;
+  font-weight: lighter;
+  font-size: 0.8em;
+  border-right: 0.5px solid rgba(0, 0, 0, 0.1);
+}
+
+div.game-info-buttons > div.moves-btn ul {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-align: center;
+}
+
+div.game-info-buttons button:hover {
+  font-weight: 500;
+  text-shadow: 0 0 3px #ffffff;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+div.game-info-buttons button:focus {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+div.game-info-buttons button:first-child:not(div.moves-btn button) {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+div.game-info-buttons button:last-child:not(div.moves-btn button) {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border-right: none;
+}
+
+div.game-info-buttons button > span:before {
+  position: absolute;
+  opacity: 0;
+  top: -1rem;
+  left: -2rem;
+  padding: 5px 7px;
+  color: rgba(255, 255, 255, 0.733);
+  background: rgba(0, 0, 0, 0.5);
+  transition: all 0.5 ease-in-out;
+  border-radius: 3px;
+  visibility: hidden;
+  text-shadow: none;
+  width: 5rem;
+  transition: all 0.1s ease-in;
+}
+
+div.game-info-buttons button > span.reset:before {
+  content: 'Restart Game';
+  left: 0;
+}
+div.game-info-buttons button > span.prev:before {
+  content: 'Previous Move';
+}
+div.game-info-buttons button > span.next:before {
+  content: 'Next Move';
+  left: -4.2rem;
+}
+
+div.game-info-buttons button:hover > span:before {
+  visibility: visible;
+  top: -42px;
+  opacity: 1;
+}
+
+div.game-info-buttons button > span > span {
+  position: relative;
+}
+
+div.game-info-buttons button > span > span:before {
+  position: absolute;
+  top: -2rem;
+  left: -1rem;
+  content: '';
+  padding: 0px;
+  border-radius: 0px;
+  width: 0px;
+  height: 0px;
+  background: transparent;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 10px solid rgba(0, 0, 0, 0.5);
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.1s ease-in-out;
+}
+
+div.game-info-buttons button:hover > span > span::before {
+  top: -1.6rem;
+  opacity: 1;
+  visibility: visible;
+}
+
+div.game-board {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2em;
+  border: 10px solid rgba(0, 0, 0, 0.07);
+  border-radius: 5px;
+}
+
+div.game-grid-container {
+  width: 100%;
+  display: grid;
+  gap: 1px;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 120px);
+}
+
+div.game-grid-container div.game-grid-item {
+  border-right: 1px dashed rgba(0, 0, 0, 0.3);
+  border-top: 1px dashed rgba(0, 0, 0, 0.3);
+  transition: all 0.5s ease-in-out;
+  overflow: hidden;
+}
+
+div.game-grid-container div.game-grid-item:first-child,
+div.game-grid-container div.game-grid-item:nth-child(2),
+div.game-grid-container div.game-grid-item:nth-child(3) {
+  border-top: none;
+}
+
+div.game-grid-container div.game-grid-item:nth-child(3),
+div.game-grid-container div.game-grid-item:nth-child(6),
+div.game-grid-container div.game-grid-item:nth-child(9) {
+  border-right: none;
+}
+
+div.game-grid-container div.game-grid-item button {
+  background: transparent;
+  border: none;
+  display: block;
+  width: 100%;
+  height: 100%;
+  font-size: 100px;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: lighter;
+  cursor: pointer;
+}
+
+div.game-grid-container div.game-grid-item button span.btn-placeholder {
+  display: block;
+  transform: translate(0);
+  transition: all 0.5s ease-in-out;
+  color: rgba(255, 255, 255, 0.02);
+}
+
+div.game-grid-container div.game-grid-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+div.game-grid-container div.game-grid-item:hover span.btn-placeholder {
+  transform: scale(1.5) translate(0px, 10px) rotate(20deg);
+  font-size: 300px;
+}
+div.footer {
+  margin: 5px 0;
+}
+
+div.footer span {
+  color: rgba(255, 255, 255, 0.4);
+  display: block;
+  text-align: center;
+  padding: 10px 0;
+}
+
+@media screen and (min-width: 1500px) {
+  /* div.game-container {
+    min-width: 200px;
+    max-width: 700px;
+    flex: auto;
+  } */
+}
