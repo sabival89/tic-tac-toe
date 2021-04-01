@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Board from "./Board";
 import { GameProps } from "../Types/TypeProps";
-
+import GameInfo from './GameInfo';
 /**
  * Handle Game logic
  * @param props 
@@ -114,27 +114,16 @@ const Game = (props:GameProps) => {
     <div className="game-container">
       <h1>Tic Tac Toe</h1>
       <div className="game-info">
-        <span style={{display: gameWinner ? 'block' : "none"}} className="game-info-status-winner">{gameWinner}</span>
-        <span style={{display: status && !isGameOver() ? 'block' : 'none'}} className="game-info-status">{status}</span>
-        <span style={{display: isGameOver() ? 'block' : 'none'}} className="game-info-gameover">{isGameOver() &&  `Game Over`}</span>
-        
-        <div className="game-info-buttons">
-          <button onClick={reset}>	
-            <span className="reset">&#128472;<span></span></span>
-            
-            </button>
-          <button name="prevMove" onClick={prevMove}>
-            <span className="prev">&#171;<span></span></span>
-          </button>
-          <div className="moves-btn" style={{ display: stepNumber > 0 ? "block" : "none" }}>
-            <ul>
-              {moves}
-            </ul>
-          </div>
-          <button name="nextMove" onClick={nextMove}>
-            <span className="next">&#187;<span></span></span>
-          </button>
-        </div>
+        <GameInfo 
+          gameWinner={gameWinner}
+          stepNumber={stepNumber}
+          moves={moves}
+          isGameOver={isGameOver}
+          status={status}
+          reset={reset}
+          prevMove={prevMove}
+          nextMove={nextMove}
+        />
       </div>
 
       <div className="game-board">

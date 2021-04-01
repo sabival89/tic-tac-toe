@@ -17,3 +17,17 @@ export type GameProps = {
     counterVal: number;
     xIsNextVal: boolean;
 }
+
+/**
+ * Type properties for Gameinfo Component
+ */
+export type GameInfoProps = {
+    gameWinner: string;
+    isGameOver: () => boolean;
+    status: string;
+    reset: () => void;
+    prevMove: () => void;
+    nextMove: () => void;
+    stepNumber: number;
+    moves: Array<JSX.Element>;
+}
