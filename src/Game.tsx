@@ -99,8 +99,10 @@ const Game = (props:GameProps) => {
   // Get current date - To be used in Footer
   const date = new Date();
 
-  console.log(gameWinner, gameHistory.length-1)
-
+  /**
+   * Determine game over state
+   * @returns BoOlean
+   */
   const isGameOver = () => {
     return gameHistory.length-1 === 9 && gameWinner === '';
   }

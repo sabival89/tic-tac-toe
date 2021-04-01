@@ -15,7 +15,7 @@ button:focus {
 body {
   margin: 0;
   padding: 0;
-  background: rgb(0, 63, 183);
+  background: rgb(117, 66, 203);
   font: 14px 'Segoe UI Light', 'Century Gothic', Futura, sans-serif;
 }
 
@@ -24,12 +24,20 @@ body {
   ========================
 */
 main.container {
-  background: rgb(0, 59, 134);
+  /* background: rgb(0, 59, 134);
   background: linear-gradient(
     12deg,
     rgba(0, 59, 134, 1) 0%,
     rgba(0, 55, 185, 1) 0%,
     rgba(0, 136, 163, 1) 100%
+  ); */
+
+  background: rgba(124, 63, 204, 1);
+  background: linear-gradient(
+    12deg,
+    rgba(64, 82, 185, 1) 0%,
+    rgba(124, 63, 204, 1) 0%,
+    rgba(60, 87, 194, 1) 95%
   );
   background-position: center;
   background-size: cover;
@@ -338,7 +346,7 @@ div.footer span {
   Device variations Responsiveness =
   ==================================
 */
-/* Extra small devices (phones, 600px and down) */
+/* Small devices (phones, 768px and down) */
 @media only screen and (max-width: 768px) {
   div.game-container {
     min-width: 100px;
@@ -401,11 +409,4 @@ div.footer span {
   div.game-grid-container div.game-grid-item button {
     font-size: 60px;
   }
-}
-@media screen and (min-width: 1500px) {
-  /* div.game-container {
-    min-width: 200px;
-    max-width: 700px;
-    flex: auto;
-  } */
 }
