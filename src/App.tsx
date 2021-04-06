@@ -1,17 +1,17 @@
-
-import Game from './Components/Game';
-import './css/App.css';
+import Game from './components/Game';
 
 /**
  * Render Game Component
- * @returns 
+ * @returns
  */
 const App = () => {
   return (
-    <main className="container">
-      <Game />
+    <main>
+      <div className="game__container">
+        <Game />
+      </div>
     </main>
   );
-}
+};
 
 export default App;
