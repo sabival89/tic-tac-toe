@@ -37,8 +37,7 @@ const Game = ({
    * @param {*} i
    */
   const handleClick = (squareIndex: number) => {
-    const gameHistory = history.slice(0, stepNumber + 1);
-    const current = gameHistory[gameHistory.length - 1];
+    const current = history[history.length - 1];
     const squares = [...current.squares];
 
     // Prevent further cell clicks after winning
@@ -48,9 +47,9 @@ const Game = ({
     squares[squareIndex] = xIsNext ? 'X' : 'O';
 
     // Update states
-    setHistory(gameHistory.concat([{ squares: squares }]));
-    setCounter(gameHistory.length);
-    setStepNumber(gameHistory.length);
+    setHistory(history.concat([{ squares: squares }]));
+    setCounter(history.length);
+    setStepNumber(history.length);
     setXisNext((prevXisNext) => !prevXisNext);
   };
 
