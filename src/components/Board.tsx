@@ -17,18 +17,19 @@ const Board = ({ winningSquares, squares, handleClick }: BoardProps) => {
 
   // Render new Square component
   return (
-    <div className="game--board--grid">
-      {Array.from(Array(numberOfCells).keys()).map((squareIndex) => (
-        <div className="game--board--grid__item" key={squareIndex}>
-          <Square
-            value={squares[squareIndex]}
-            squareIndex={squareIndex}
-            handleClick={handleClick}
-            squares={[]}
-            isWinnerCell={winningSquares?.includes(squareIndex)}
-          />
-        </div>
-      ))}
+    <div className="game--board">
+      <div className="game--board--grid">
+        {Array.from(Array(numberOfCells).keys()).map((squareIndex) => (
+          <div className="game--board--grid__item" key={squareIndex}>
+            <Square
+              value={squares[squareIndex]}
+              squareIndex={squareIndex}
+              handleClick={handleClick}
+              isWinnerCell={winningSquares?.includes(squareIndex)}
+            />
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

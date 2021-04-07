@@ -4,13 +4,13 @@ import React from 'react';
  * Type properties for Gameinfo Component
  */
 type GameInfoProps = {
-  gameWinner: string;
+  winner: string;
   stepNumber: number;
-  status: string;
+  player: string;
   reset: () => void;
   prevMove: () => void;
   nextMove: () => void;
-  isGameOver: () => boolean;
+  history: GameHistory;
   moves: Array<JSX.Element>;
 };
 
@@ -19,48 +19,65 @@ type GameInfoProps = {
  * @param param0
  * @returns
  */
-const GameInfo: React.FC<GameInfoProps> = (props) => {
+const GameInfo: React.FC<GameInfoProps> = ({
+  winner,
+  stepNumber,
+  player,
+  history,
+  prevMove,
+  nextMove,
+  reset,
+  moves,
+}) => {
+  /**
+   * Determine gameover state
+   * @returns BoOlean
+   */
+  const isGameOver = () => {
+    return history.length - 1 === 9 && winner === undefined;
+  };
+
   return (
-    <>
+    <div className="game--info">
       <span
-        style={{ display: props.gameWinner ? 'block' : 'none' }}
+        style={{ display: winner ? 'block' : 'none' }}
         className="game--info-winner"
       >
-        {props.gameWinner}
+        {winner}
       </span>
       <span
         style={{
-          display: props.status && !props.isGameOver() ? 'block' : 'none',
+          display: player && !isGameOver() ? 'block' : 'none',
         }}
         className="game--info-player"
       >
-        {props.status}
+        {player}
       </span>
       <span
-        style={{ display: props.isGameOver() ? 'block' : 'none' }}
+        style={{ display: isGameOver() ? 'block' : 'none' }}
         className="game--info-gameover"
       >
-        {props.isGameOver() && `Game Over`}
+        {isGameOver() && `Game Over`}
       </span>
 
       <div className="game--info-buttons">
-        <button onClick={props.reset}>
+        <button onClick={reset}>
           <span className="game--info-buttons__reset">&#128472;</span>
         </button>
-        <button name="prevMove" onClick={props.prevMove}>
+        <button name="prevMove" onClick={prevMove}>
           <span className="game--info-buttons__prev">&#171;</span>
         </button>
         <div
           className="game--info-buttons__moves"
-          style={{ display: props.stepNumber > 0 ? 'block' : 'none' }}
+          style={{ display: stepNumber > 0 ? 'block' : 'none' }}
         >
-          <ul>{props.moves}</ul>
+          <ul>{moves}</ul>
         </div>
-        <button name="nextMove" onClick={props.nextMove}>
+        <button name="nextMove" onClick={nextMove}>
           <span className="game--info-buttons__next">&#187;</span>
         </button>
       </div>
-    </>
+    </div>
   );
 };
 

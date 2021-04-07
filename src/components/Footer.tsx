@@ -1,13 +1,14 @@
-import React from 'react';
+/**
+ * Game App Footer component
+ * @returns
+ */
+const Footer = () => {
+  // Get current date - To be used in Footer
+  const date = new Date();
 
-type DateProperty = {
-  currentYear: number;
-};
-
-const Footer = ({ currentYear }: DateProperty) => {
   return (
     <div className="footer">
-      <span>&copy; {currentYear}. Game Demo Inc</span>
+      <span>&copy; {date.getFullYear()}. Game Demo Inc</span>
     </div>
   );
 };

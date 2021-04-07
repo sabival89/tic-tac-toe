@@ -22,5 +22,3 @@ export const calculateWinner = (squares: Array<null | string>) => {
   }
   return false;
 };
-
-// export default calculateWinner;

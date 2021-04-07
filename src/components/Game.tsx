@@ -1,43 +1,35 @@
 import { useState } from 'react';
+import { calculateWinner, createArrayAttributes } from '../utilities/';
 import Board from './Board';
 import GameInfo from './GameInfo';
+import Move from './Move';
 import Footer from './Footer';
-import { calculateWinner, createArrayAttributes } from '../utilities/';
 
 /**
  * Type properties for Game component state values
  */
 type GameProps = {
-  historyVal: Array<{ squares: Array<null | string> }>;
-  stepNumberVal: number;
-  counterVal: number;
-  xIsNextVal: boolean;
+  historyVal?: Array<{ squares: Array<null | string> }>;
+  stepNumberVal?: number;
+  xIsNextVal?: boolean;
 };
-
-/**
- *
- */
-type GameHistory = Array<{ squares: Array<null | string> }>;
 
 /*
  * Handle Game logic
  * @param props
  * @returns
  */
-const Game = (
-  props: GameProps = {
-    historyVal: createArrayAttributes(9),
-    stepNumberVal: 0,
-    counterVal: 0,
-    xIsNextVal: true,
-  }
-) => {
+const Game = ({
+  historyVal = createArrayAttributes(9),
+  stepNumberVal = 0,
+  xIsNextVal = true,
+}: GameProps) => {
   /**
    * Game's state declarations
    */
-  const [history, setHistory] = useState<GameHistory>(props.historyVal);
-  const [stepNumber, setStepNumber] = useState<number>(props.stepNumberVal);
-  const [xIsNext, setXisNext] = useState<boolean>(props.xIsNextVal);
+  const [history, setHistory] = useState<GameHistory>(historyVal);
+  const [stepNumber, setStepNumber] = useState<number>(stepNumberVal);
+  const [xIsNext, setXisNext] = useState<boolean>(xIsNextVal);
   const [counter, setCounter] = useState<number>(history.length);
 
   /**
@@ -49,12 +41,10 @@ const Game = (
     const current = gameHistory[gameHistory.length - 1];
     const squares = [...current.squares];
 
-    console.log(gameHistory, current, squares);
-
     // Prevent further cell clicks after winning
     if (calculateWinner(squares) || squares[squareIndex]) return;
 
-    // Determine next player
+    // Keep record of the squares that have been marked with either X | O
     squares[squareIndex] = xIsNext ? 'X' : 'O';
 
     // Update states
@@ -68,10 +58,10 @@ const Game = (
    * Reset game
    */
   const reset = () => {
-    setHistory(props.historyVal);
+    setHistory(historyVal);
     setCounter(1);
-    setStepNumber(props.stepNumberVal);
-    setXisNext(props.xIsNextVal);
+    setStepNumber(stepNumberVal);
+    setXisNext(xIsNextVal);
   };
 
   /**
@@ -101,45 +91,21 @@ const Game = (
     setXisNext(step % 2 === 0);
   };
 
-  // Get total game play history
-  const gameHistory = history;
-
   // Get the current step from the history
-  const current = gameHistory[stepNumber];
-
-  // Type guard to ensure return val is not false
-  const isNotNullVal = calculateWinner(current.squares);
+  const current = history[stepNumber];
 
   // Get the game winner string val
-  const { winner, winningSquares }: any =
-    isNotNullVal && calculateWinner(current.squares);
+  const { winner, winningSquares }: any = calculateWinner(current.squares);
 
   // Determine player turns
-  const status: string = winner ? `` : xIsNext ? 'X' : 'O';
-
-  // Determine Winner
-  const gameWinner: string = !winner ? `` : `${winner}`;
-
-  // Get current date - To be used in Footer
-  const date = new Date();
+  const player: string = winner ? `` : xIsNext ? 'X' : 'O';
 
   /**
-   * Determine game over state
-   * @returns BoOlean
+   * Back in time 'Move' buttons
    */
-  const isGameOver = () => {
-    return gameHistory.length - 1 === 9 && gameWinner === '';
-  };
-
-  // Generate moves buttons
-  const moves = gameHistory.map((step, move) => {
-    const desc = move ? move : ``;
-    return (
-      <li style={{ display: move <= 0 ? 'none' : 'block' }} key={move}>
-        <button onClick={() => jumpTo(move)}>{desc}</button>
-      </li>
-    );
-  });
+  const movesButtons = history.map((step, move) => (
+    <Move key={move} jumpTo={jumpTo} move={move} />
+  ));
 
   /**
    * Render UI
@@ -147,40 +113,26 @@ const Game = (
   return (
     <>
       <h1>Tic Tac Toe</h1>
-      <div className="game--info">
-        <GameInfo
-          gameWinner={gameWinner}
-          stepNumber={stepNumber}
-          moves={moves}
-          isGameOver={isGameOver}
-          status={status}
-          reset={reset}
-          prevMove={prevMove}
-          nextMove={nextMove}
-        />
-      </div>
+      <GameInfo
+        winner={winner}
+        stepNumber={stepNumber}
+        moves={movesButtons}
+        history={history}
+        player={player}
+        reset={reset}
+        prevMove={prevMove}
+        nextMove={nextMove}
+      />
 
-      <div className="game--board">
-        <Board
-          squares={current.squares}
-          handleClick={handleClick}
-          winningSquares={winningSquares}
-        />
-      </div>
+      <Board
+        squares={current.squares}
+        handleClick={handleClick}
+        winningSquares={winningSquares}
+      />
 
-      <Footer currentYear={date.getFullYear()} />
+      <Footer />
     </>
   );
-};
-
-/**
- * Default state properties and values
- */
-Game.defaultProps = {
-  historyVal: createArrayAttributes(9),
-  stepNumberVal: 0,
-  counterVal: 0,
-  xIsNextVal: true,
 };
 
 export default Game;

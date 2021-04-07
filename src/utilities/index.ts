@@ -1,2 +1,2 @@
-export * from './calculateWinner'
-export * from './createArrayAttributes'
+export * from './calculateWinner';
+export * from './createArrayAttributes';

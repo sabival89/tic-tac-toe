@@ -5,8 +5,6 @@ type SquareProps = {
   squareIndex: number;
   value?: string | null;
   isWinnerCell?: boolean;
-  squares: Array<null | string>;
-  winningSquares?: Array<number>;
   handleClick(i: number): void;
 };
 /**
