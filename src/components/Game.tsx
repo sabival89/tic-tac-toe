@@ -99,10 +99,9 @@ const reducer = (state: State, action: Action): State => {
  * @returns
  */
 const Game = () => {
-  const [{ history, xIsNext, stepNumber }, dispatch] = useReducer(
-    reducer,
-    initialStateProperties
-  );
+  const [{ history, xIsNext, stepNumber }, dispatch] = useReducer<
+    (state: State, action: Action) => State
+  >(reducer, initialStateProperties);
 
   const [winningPlayer, setWinningPlayer] = useState<string>('');
   const [winMatchingSquares, setWinMatchingSquares] = useState<Array<number>>(
