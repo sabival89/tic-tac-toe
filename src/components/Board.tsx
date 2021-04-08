@@ -5,8 +5,8 @@ import Square from './Square';
  */
 type BoardProps = {
   squares: Array<null | string>;
-  winningSquares?: Array<number>;
-  dispatch: React.Dispatch<{ type: 'handleClick'; payload: number }>;
+  winningSquares: Array<number>;
+  dispatch: React.Dispatch<Action>;
 };
 
 /**

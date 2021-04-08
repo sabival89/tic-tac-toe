@@ -24,14 +24,6 @@ body {
   ========================
 */
 main {
-  /* background: rgb(0, 59, 134);
-  background: linear-gradient(
-    12deg,
-    rgba(0, 59, 134, 1) 0%,
-    rgba(0, 55, 185, 1) 0%,
-    rgba(0, 136, 163, 1) 100%
-  ); */
-
   background: rgba(124, 63, 204, 1);
   background: linear-gradient(
     12deg,

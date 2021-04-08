@@ -115,6 +115,7 @@ const Game = () => {
   // Determine player turns
   const player: string = winningPlayer ? `` : xIsNext ? 'X' : 'O';
 
+  // Track winning player
   useEffect(() => {
     // Get the game winner string and squares
     const { winner, winningSquares }: any = calculateWinner(current.squares);
@@ -130,7 +131,7 @@ const Game = () => {
   ));
 
   /**
-   * Render UI
+   * Render Component
    */
   return (
     <>
