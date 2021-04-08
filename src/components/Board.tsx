@@ -1,9 +1,12 @@
 import Square from './Square';
 
+/**
+ * Type properties for Board Component
+ */
 type BoardProps = {
   squares: Array<null | string>;
   winningSquares?: Array<number>;
-  handleClick(i: number): void;
+  dispatch: React.Dispatch<{ type: 'handleClick'; payload: number }>;
 };
 
 /**
@@ -11,7 +14,7 @@ type BoardProps = {
  * @param props
  * @returns
  */
-const Board = ({ winningSquares, squares, handleClick }: BoardProps) => {
+const Board = ({ winningSquares, squares, dispatch }: BoardProps) => {
   // Number of cells to display on the game board
   const numberOfCells = 9;
 
@@ -24,7 +27,7 @@ const Board = ({ winningSquares, squares, handleClick }: BoardProps) => {
             <Square
               value={squares[squareIndex]}
               squareIndex={squareIndex}
-              handleClick={handleClick}
+              dispatch={dispatch}
               isWinnerCell={winningSquares?.includes(squareIndex)}
             />
           </div>

@@ -1,5 +1,4 @@
 import React from 'react';
-
 /**
  * Type properties for Gameinfo Component
  */
@@ -7,9 +6,7 @@ type GameInfoProps = {
   winner: string;
   stepNumber: number;
   player: string;
-  reset: () => void;
-  prevMove: () => void;
-  nextMove: () => void;
+  dispatch: React.Dispatch<Action>;
   history: GameHistory;
   moves: Array<JSX.Element>;
 };
@@ -24,9 +21,7 @@ const GameInfo: React.FC<GameInfoProps> = ({
   stepNumber,
   player,
   history,
-  prevMove,
-  nextMove,
-  reset,
+  dispatch,
   moves,
 }) => {
   /**
@@ -61,10 +56,10 @@ const GameInfo: React.FC<GameInfoProps> = ({
       </span>
 
       <div className="game--info-buttons">
-        <button onClick={reset}>
+        <button onClick={() => dispatch({ type: 'reset' })}>
           <span className="game--info-buttons__reset">&#128472;</span>
         </button>
-        <button name="prevMove" onClick={prevMove}>
+        <button name="prevMove" onClick={() => dispatch({ type: 'prevMove' })}>
           <span className="game--info-buttons__prev">&#171;</span>
         </button>
         <div
@@ -73,7 +68,7 @@ const GameInfo: React.FC<GameInfoProps> = ({
         >
           <ul>{moves}</ul>
         </div>
-        <button name="nextMove" onClick={nextMove}>
+        <button name="nextMove" onClick={() => dispatch({ type: 'nextMove' })}>
           <span className="game--info-buttons__next">&#187;</span>
         </button>
       </div>

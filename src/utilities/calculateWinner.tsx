@@ -1,8 +1,7 @@
 /**
- * Calculate game winner
+ * Calculate the game winner
  * @param {*} squares
  */
-
 export const calculateWinner = (squares: Array<null | string>) => {
   const lines: Array<Array<number>> = [
     [0, 1, 2],

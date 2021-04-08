@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useReducer, useState } from 'react';
 import { calculateWinner, createArrayAttributes } from '../utilities/';
 import Board from './Board';
 import GameInfo from './GameInfo';
@@ -6,12 +6,91 @@ import Move from './Move';
 import Footer from './Footer';
 
 /**
- * Type properties for Game component state values
+ * Type for game state properties
  */
-type GameProps = {
-  historyVal?: Array<{ squares: Array<null | string> }>;
-  stepNumberVal?: number;
-  xIsNextVal?: boolean;
+type State = {
+  history: GameHistory;
+  xIsNext: boolean;
+  stepNumber: number;
+  counter: number;
+};
+
+/**
+ * Initilization of game state properties
+ * @returns
+ */
+const initialStateProperties: State = {
+  history: createArrayAttributes(9),
+  xIsNext: true,
+  stepNumber: 0,
+  counter: 0,
+};
+
+/**
+ * Handle game logic
+ * @param state
+ * @param action
+ * @returns
+ */
+const reducer = (state: State, action: Action): State => {
+  switch (action.type) {
+    // Go to next move
+    case 'nextMove': {
+      if (state.stepNumber >= state.counter || state.counter === 1)
+        return { ...state };
+
+      return {
+        ...state,
+        stepNumber: state.stepNumber + 1,
+        xIsNext: !state.xIsNext,
+      };
+    }
+
+    // Go to previous move
+    case 'prevMove':
+      if (state.stepNumber === 0) return { ...state };
+      return {
+        ...state,
+        stepNumber: state.stepNumber - 1,
+        xIsNext: !state.xIsNext,
+        counter: state.counter,
+      };
+
+    // Reset game
+    case 'reset':
+      return initialStateProperties;
+
+    // Handle each board's cell action when clicked
+    case 'handleClick': {
+      const current = state.history[state.history.length - 1];
+      const squares = [...current.squares];
+
+      // Prevent further cell clicks after winning
+      if (calculateWinner(squares) || squares[action.payload])
+        return { ...state };
+
+      // Keep record of the squares that have been marked with either X | O
+      squares[action.payload] = state.xIsNext ? 'X' : 'O';
+
+      // Update states
+      return {
+        history: [...state.history, ...[{ squares: squares }]],
+        counter: state.history.length,
+        stepNumber: state.history.length,
+        xIsNext: !state.xIsNext,
+      };
+    }
+
+    // Update time travel steps with step number
+    case 'jumpTo':
+      return {
+        ...state,
+        xIsNext: action.payload % 2 === 0,
+        stepNumber: action.payload,
+      };
+    default:
+      throw new Error();
+  }
 };
 
 /*
@@ -19,91 +98,35 @@ type GameProps = {
  * @param props
  * @returns
  */
-const Game = ({
-  historyVal = createArrayAttributes(9),
-  stepNumberVal = 0,
-  xIsNextVal = true,
-}: GameProps) => {
-  /**
-   * Game's state declarations
-   */
-  const [history, setHistory] = useState<GameHistory>(historyVal);
-  const [stepNumber, setStepNumber] = useState<number>(stepNumberVal);
-  const [xIsNext, setXisNext] = useState<boolean>(xIsNextVal);
-  const [counter, setCounter] = useState<number>(history.length);
+const Game = () => {
+  const [{ history, xIsNext, stepNumber }, dispatch] = useReducer(
+    reducer,
+    initialStateProperties
+  );
 
-  /**
-   * Handle each board's cell action when clicked
-   * @param {*} i
-   */
-  const handleClick = (squareIndex: number) => {
-    const current = history[history.length - 1];
-    const squares = [...current.squares];
-
-    // Prevent further cell clicks after winning
-    if (calculateWinner(squares) || squares[squareIndex]) return;
-
-    // Keep record of the squares that have been marked with either X | O
-    squares[squareIndex] = xIsNext ? 'X' : 'O';
-
-    // Update states
-    setHistory(history.concat([{ squares: squares }]));
-    setCounter(history.length);
-    setStepNumber(history.length);
-    setXisNext((prevXisNext) => !prevXisNext);
-  };
-
-  /**
-   * Reset game
-   */
-  const reset = () => {
-    setHistory(historyVal);
-    setCounter(1);
-    setStepNumber(stepNumberVal);
-    setXisNext(xIsNextVal);
-  };
-
-  /**
-   * Go to previous Move
-   */
-  const prevMove = () => {
-    if (stepNumber === 0) return;
-    setStepNumber((prevStep) => prevStep - 1);
-    setXisNext((next) => !next);
-  };
-
-  /**
-   * Go to next move
-   */
-  const nextMove = () => {
-    if (stepNumber >= counter || counter === 1) return;
-    setStepNumber((prevStep) => prevStep + 1);
-    setXisNext((next) => !next);
-  };
-
-  /**
-   * Update time travel steps with step number
-   * @param {*} step
-   */
-  const jumpTo = (step: number) => {
-    setStepNumber(step);
-    setXisNext(step % 2 === 0);
-  };
+  const [winningPlayer, setWinningPlayer] = useState<string>('');
+  const [winMatchingSquares, setWinMatchingSquares] = useState<Array<number>>(
+    []
+  );
 
   // Get the current step from the history
   const current = history[stepNumber];
 
-  // Get the game winner string val
-  const { winner, winningSquares }: any = calculateWinner(current.squares);
-
   // Determine player turns
-  const player: string = winner ? `` : xIsNext ? 'X' : 'O';
+  const player: string = winningPlayer ? `` : xIsNext ? 'X' : 'O';
+
+  useEffect(() => {
+    // Get the game winner string and squares
+    const { winner, winningSquares }: any = calculateWinner(current.squares);
+    setWinningPlayer(winner);
+    setWinMatchingSquares(winningSquares);
+  }, [history]);
 
   /**
    * Back in time 'Move' buttons
    */
-  const movesButtons = history.map((step, move) => (
-    <Move key={move} jumpTo={jumpTo} move={move} />
+  const MovesButtons = history.map((step, move) => (
+    <Move key={move} move={move} dispatch={dispatch} />
   ));
 
   /**
@@ -113,20 +136,18 @@ const Game = ({
     <>
       <h1>Tic Tac Toe</h1>
       <GameInfo
-        winner={winner}
+        winner={winningPlayer}
         stepNumber={stepNumber}
-        moves={movesButtons}
+        moves={MovesButtons}
         history={history}
         player={player}
-        reset={reset}
-        prevMove={prevMove}
-        nextMove={nextMove}
+        dispatch={dispatch}
       />
 
       <Board
         squares={current.squares}
-        handleClick={handleClick}
-        winningSquares={winningSquares}
+        winningSquares={winMatchingSquares}
+        dispatch={dispatch}
       />
 
       <Footer />

@@ -1,9 +1,9 @@
 /**
- * Moves Component Props
+ * Type properties for Moves Component
  */
 type MoveProps = {
   move: number;
-  jumpTo: (val: number) => void;
+  dispatch: React.Dispatch<{ type: 'jumpTo'; payload: number }>;
 };
 
 /**
@@ -11,11 +11,13 @@ type MoveProps = {
  * @param param0
  * @returns
  */
-const Moves = ({ move, jumpTo }: MoveProps) => {
+const Moves = ({ move, dispatch }: MoveProps) => {
   return (
     <>
       <li style={{ display: move <= 0 ? 'none' : 'block' }} key={move}>
-        <button onClick={() => jumpTo(move)}>{move}</button>
+        <button onClick={() => dispatch({ type: 'jumpTo', payload: move })}>
+          {move}
+        </button>
       </li>
     </>
   );
