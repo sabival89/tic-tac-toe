@@ -15,6 +15,11 @@ type State = {
   counter: number;
 };
 
+type WinnerProps = {
+  winner: string;
+  winningSquares: Array<number>;
+};
+
 /**
  * Initilization of game state properties
  * @returns
@@ -25,6 +30,11 @@ const initialStateProperties: State = {
   stepNumber: 0,
   counter: 0,
 };
+
+/**
+ * Inotilization of game winner properties
+ */
+const winnerProps: WinnerProps = { winner: '', winningSquares: [] };
 
 /**
  * Handle game logic
@@ -103,23 +113,24 @@ const Game = () => {
     (state: State, action: Action) => State
   >(reducer, initialStateProperties);
 
-  const [winningPlayer, setWinningPlayer] = useState<string>('');
-  const [winMatchingSquares, setWinMatchingSquares] = useState<Array<number>>(
-    []
-  );
+  const [winningPlayer, setWinningPlayer] = useState(winnerProps);
 
   // Get the current step from the history
   const current = history[stepNumber];
 
   // Determine player turns
-  const player: string = winningPlayer ? `` : xIsNext ? 'X' : 'O';
+  const player: string = winningPlayer.winner ? `` : xIsNext ? 'X' : 'O';
 
   // Track winning player
   useEffect(() => {
     // Get the game winner string and squares
     const { winner, winningSquares }: any = calculateWinner(current.squares);
-    setWinningPlayer(winner);
-    setWinMatchingSquares(winningSquares);
+    setWinningPlayer(() => {
+      return {
+        winner: winner,
+        winningSquares: winningSquares,
+      };
+    });
   }, [history]);
 
   /**
@@ -136,7 +147,7 @@ const Game = () => {
     <>
       <h1>Tic Tac Toe</h1>
       <GameInfo
-        winner={winningPlayer}
+        winner={winningPlayer.winner}
         stepNumber={stepNumber}
         moves={MovesButtons}
         history={history}
@@ -146,7 +157,7 @@ const Game = () => {
 
       <Board
         squares={current.squares}
-        winningSquares={winMatchingSquares}
+        winningSquares={winningPlayer.winningSquares}
         dispatch={dispatch}
       />
 
