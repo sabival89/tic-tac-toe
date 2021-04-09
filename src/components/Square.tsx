@@ -5,7 +5,7 @@ type SquareProps = {
   squareIndex: number;
   value?: string | null;
   isWinnerCell?: boolean;
-  dispatch: React.Dispatch<{type: 'handleClick', payload: number}>;
+  dispatch: React.Dispatch<Action>;
 };
 /**
  * Render board cell buttons

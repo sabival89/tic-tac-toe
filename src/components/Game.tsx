@@ -131,7 +131,7 @@ const Game = () => {
         winningSquares: winningSquares,
       };
     });
-  }, [history]);
+  }, [current.squares]);
 
   /**
    * Back in time 'Move' buttons
