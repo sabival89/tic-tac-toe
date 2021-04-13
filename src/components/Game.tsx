@@ -113,7 +113,10 @@ const Game = () => {
     (state: State, action: Action) => State
   >(reducer, initialStateProperties);
 
-  const [winningPlayer, setWinningPlayer] = useState(winnerProps);
+  const [winningPlayer, setWinningPlayer] = useState<{
+    winner: string;
+    winningSquares: Array<number>;
+  }>({ winner: '', winningSquares: [] });
 
   // Get the current step from the history
   const current = history[stepNumber];
