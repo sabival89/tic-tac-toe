@@ -8,7 +8,7 @@ import Footer from './Footer';
 /**
  * Type for game state properties
  */
-type State = {
+type GameState = {
   history: GameHistory;
   xIsNext: boolean;
   stepNumber: number;
