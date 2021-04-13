@@ -71,7 +71,7 @@ const reducer = (state: State, action: Action): State => {
       return initialStateProperties;
 
     // Handle each board's cell action when clicked
-    case 'handleClick': {
+    case 'addMove': {
       const current = state.history[state.history.length - 1];
       const squares = [...current.squares];
 
