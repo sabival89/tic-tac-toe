@@ -3,10 +3,10 @@ import React from 'react';
  * Type properties for Gameinfo Component
  */
 type GameInfoProps = {
-  winner: string;
+  winner: string | null;
   stepNumber: number;
   player: string;
-  dispatch: React.Dispatch<Action>;
+  dispatch: React.Dispatch<GameStateAction>;
   history: GameHistory;
   moves: Array<JSX.Element>;
 };
@@ -28,9 +28,7 @@ const GameInfo: React.FC<GameInfoProps> = ({
    * Determine gameover state
    * @returns BoOlean
    */
-  const isGameOver = () => {
-    return history.length - 1 === 9 && winner === undefined;
-  };
+  const isGameOver = () => history.length - 1 === 9 && winner === '';
 
   return (
     <div className="game--info">

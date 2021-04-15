@@ -2,7 +2,8 @@
  * Calculate the game winner
  * @param {*} squares
  */
-export const calculateWinner = (squares: Array<null | string>) => {
+
+export const calculateWinner = (squares: Array<string>): WinnerState => {
   const lines: Array<Array<number>> = [
     [0, 1, 2],
     [3, 4, 5],
@@ -16,8 +17,11 @@ export const calculateWinner = (squares: Array<null | string>) => {
   for (let i = 0; i < lines.length; i++) {
     const [a, b, c] = lines[i];
     if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-      return { winner: squares[a], winningSquares: [a, b, c] };
+      return { hasWinner: true, winner: squares[a], winningSquares: [a, b, c] };
     }
   }
-  return false;
+
+  return { hasWinner: false, winner: '', winningSquares: [] };
 };
+
+export default calculateWinner;

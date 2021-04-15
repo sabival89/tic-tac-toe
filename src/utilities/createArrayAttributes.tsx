@@ -3,6 +3,8 @@
  * @param numberOfElements
  * @returns
  */
-export const createArrayAttributes = (numberOfElements: number) => {
-  return [{ squares: Array(numberOfElements).fill(null) }];
-};
+const createArrayAttributes = (numberOfElements: number) => [
+  { squares: Array(numberOfElements).fill('') },
+];
+
+export default createArrayAttributes;

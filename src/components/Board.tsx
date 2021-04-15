@@ -6,7 +6,7 @@ import Square from './Square';
 type BoardProps = {
   squares: Array<null | string>;
   winningSquares: Array<number>;
-  dispatch: React.Dispatch<Action>;
+  dispatch: React.Dispatch<GameStateAction>;
 };
 
 /**

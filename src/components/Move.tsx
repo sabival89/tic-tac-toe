@@ -3,7 +3,7 @@
  */
 type MoveProps = {
   move: number;
-  dispatch: React.Dispatch<Action>;
+  dispatch: React.Dispatch<GameStateAction>;
 };
 
 /**

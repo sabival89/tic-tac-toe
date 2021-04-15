@@ -5,7 +5,7 @@ type SquareProps = {
   squareIndex: number;
   value?: string | null;
   isWinnerCell?: boolean;
-  dispatch: React.Dispatch<Action>;
+  dispatch: React.Dispatch<GameStateAction>;
 };
 /**
  * Render board cell buttons
@@ -20,7 +20,7 @@ const Square = ({
   return (
     <button
       className={isWinnerCell ? 'square' : ''}
-      onClick={() => dispatch({ type: 'handleClick', payload: squareIndex })}
+      onClick={() => dispatch({ type: 'addMove', payload: squareIndex })}
     >
       {value || <span className="btn-placeholder">?</span>}
     </button>

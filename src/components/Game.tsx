@@ -15,16 +15,11 @@ type GameState = {
   counter: number;
 };
 
-type WinnerProps = {
-  winner: string;
-  winningSquares: Array<number>;
-};
-
 /**
  * Initilization of game state properties
  * @returns
  */
-const initialStateProperties: State = {
+const initialStateProperties: GameState = {
   history: createArrayAttributes(9),
   xIsNext: true,
   stepNumber: 0,
@@ -32,17 +27,12 @@ const initialStateProperties: State = {
 };
 
 /**
- * Inotilization of game winner properties
- */
-const winnerProps: WinnerProps = { winner: '', winningSquares: [] };
-
-/**
  * Handle game logic
  * @param state
  * @param action
  * @returns
  */
-const reducer = (state: State, action: Action): State => {
+const reducer = (state: GameState, action: GameStateAction): GameState => {
   switch (action.type) {
     // Go to next move
     case 'nextMove': {
@@ -76,7 +66,7 @@ const reducer = (state: State, action: Action): State => {
       const squares = [...current.squares];
 
       // Prevent further cell clicks after winning
-      if (calculateWinner(squares) || squares[action.payload])
+      if (calculateWinner(squares).hasWinner || squares[action.payload])
         return { ...state };
 
       // Keep record of the squares that have been marked with either X | O
@@ -110,7 +100,7 @@ const reducer = (state: State, action: Action): State => {
  */
 const Game = () => {
   const [{ history, xIsNext, stepNumber }, dispatch] = useReducer<
-    (state: State, action: Action) => State
+    (state: GameState, action: GameStateAction) => GameState
   >(reducer, initialStateProperties);
 
   const [winningPlayer, setWinningPlayer] = useState<{
@@ -119,29 +109,23 @@ const Game = () => {
   }>({ winner: '', winningSquares: [] });
 
   // Get the current step from the history
-  const current = history[stepNumber];
+  const currentTurn = history[stepNumber];
 
   // Determine player turns
-  const player: string = winningPlayer.winner ? `` : xIsNext ? 'X' : 'O';
+  const currentPlayersTurn: string = winningPlayer.winner
+    ? ``
+    : xIsNext
+    ? 'X'
+    : 'O';
 
   // Track winning player
   useEffect(() => {
     // Get the game winner string and squares
-    const { winner, winningSquares }: any = calculateWinner(current.squares);
-    setWinningPlayer(() => {
-      return {
-        winner: winner,
-        winningSquares: winningSquares,
-      };
-    });
-  }, [current.squares]);
+    const getWinnerProps: WinnerState = calculateWinner(currentTurn.squares);
 
-  /**
-   * Back in time 'Move' buttons
-   */
-  const MovesButtons = history.map((step, move) => (
-    <Move key={move} move={move} dispatch={dispatch} />
-  ));
+    // Register winner properties
+    setWinningPlayer(() => ({ ...getWinnerProps }));
+  }, [currentTurn.squares]);
 
   /**
    * Render Component
@@ -152,14 +136,16 @@ const Game = () => {
       <GameInfo
         winner={winningPlayer.winner}
         stepNumber={stepNumber}
-        moves={MovesButtons}
+        moves={history.map((step, move) => (
+          <Move key={move} move={move} dispatch={dispatch} />
+        ))}
         history={history}
-        player={player}
+        player={currentPlayersTurn}
         dispatch={dispatch}
       />
 
       <Board
-        squares={current.squares}
+        squares={currentTurn.squares}
         winningSquares={winningPlayer.winningSquares}
         dispatch={dispatch}
       />
