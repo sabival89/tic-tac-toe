@@ -5,10 +5,10 @@ import React from 'react';
 type GameInfoProps = {
   winner: string | null;
   stepNumber: number;
-  player: string;
+  currentPlayer: string;
   dispatch: React.Dispatch<GameStateAction>;
   history: GameHistory;
-  moves: Array<JSX.Element>;
+  MovesButtons: Array<JSX.Element>;
 };
 
 /**
@@ -19,10 +19,10 @@ type GameInfoProps = {
 const GameInfo: React.FC<GameInfoProps> = ({
   winner,
   stepNumber,
-  player,
+  currentPlayer,
   history,
   dispatch,
-  moves,
+  MovesButtons,
 }) => {
   /**
    * Determine gameover state
@@ -40,11 +40,11 @@ const GameInfo: React.FC<GameInfoProps> = ({
       </span>
       <span
         style={{
-          display: player && !isGameOver() ? 'block' : 'none',
+          display: currentPlayer && !isGameOver() ? 'block' : 'none',
         }}
         className="game--info-player"
       >
-        {player}
+        {currentPlayer}
       </span>
       <span
         style={{ display: isGameOver() ? 'block' : 'none' }}
@@ -64,7 +64,7 @@ const GameInfo: React.FC<GameInfoProps> = ({
           className="game--info-buttons__moves"
           style={{ display: stepNumber > 0 ? 'block' : 'none' }}
         >
-          <ul>{moves}</ul>
+          <ul>{MovesButtons}</ul>
         </div>
         <button name="nextMove" onClick={() => dispatch({ type: 'nextMove' })}>
           <span className="game--info-buttons__next">&#187;</span>

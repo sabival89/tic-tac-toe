@@ -4,7 +4,7 @@
  */
 
 export const calculateWinner = (squares: Array<string>): WinnerState => {
-  const lines: Array<Array<number>> = [
+  const gameBoardLines: Array<Array<number>> = [
     [0, 1, 2],
     [3, 4, 5],
     [6, 7, 8],
@@ -14,11 +14,12 @@ export const calculateWinner = (squares: Array<string>): WinnerState => {
     [0, 4, 8],
     [2, 4, 6],
   ];
-  for (let i = 0; i < lines.length; i++) {
-    const [a, b, c] = lines[i];
-    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+
+  for (let i = 0; i < gameBoardLines.length; i++) {
+    const [a, b, c]: Array<number> = gameBoardLines[i];
+
+    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c])
       return { hasWinner: true, winner: squares[a], winningSquares: [a, b, c] };
-    }
   }
 
   return { hasWinner: false, winner: '', winningSquares: [] };
