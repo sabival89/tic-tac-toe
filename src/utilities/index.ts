@@ -1,5 +1,6 @@
 import calculateWinner from './calculateWinner';
 import createArrayAttributes from './createArrayAttributes';
-import handleGameLogic from './handleGameLogic';
+import gameLogicReducer from './gameLogicReducer';
+import isGameOver from './isGameOver';
 
-export { calculateWinner, createArrayAttributes, handleGameLogic };
+export { calculateWinner, createArrayAttributes, gameLogicReducer, isGameOver };

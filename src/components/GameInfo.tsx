@@ -1,4 +1,5 @@
 import React from 'react';
+import { isGameOver } from '../utilities';
 /**
  * Type properties for Gameinfo Component
  */
@@ -28,7 +29,7 @@ const GameInfo: React.FC<GameInfoProps> = ({
    * Determine gameover state
    * @returns BoOlean
    */
-  const isGameOver = () => history.length - 1 === 9 && winner === '';
+  const isGameOverVal = isGameOver(history, winner);
 
   return (
     <div className="game--info">
@@ -40,17 +41,17 @@ const GameInfo: React.FC<GameInfoProps> = ({
       </span>
       <span
         style={{
-          display: currentPlayer && !isGameOver() ? 'block' : 'none',
+          display: currentPlayer && !isGameOverVal ? 'block' : 'none',
         }}
         className="game--info-player"
       >
         {currentPlayer}
       </span>
       <span
-        style={{ display: isGameOver() ? 'block' : 'none' }}
+        style={{ display: isGameOverVal ? 'block' : 'none' }}
         className="game--info-gameover"
       >
-        {isGameOver() && `Game Over`}
+        {isGameOverVal && `Game Over`}
       </span>
 
       <div className="game--info-buttons">

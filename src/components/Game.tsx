@@ -2,7 +2,7 @@ import { useEffect, useReducer, useState } from 'react';
 import {
   calculateWinner,
   createArrayAttributes,
-  handleGameLogic,
+  gameLogicReducer,
 } from '../utilities/';
 import Board from './Board';
 import GameInfo from './GameInfo';
@@ -23,8 +23,8 @@ const Game = () => {
 
   // Initialization of game board state properties
   const [{ history, xIsNext, stepNumber }, dispatch] = useReducer<
-    (state: GameStateProps, action: GameStateAction) => GameStateProps
-  >(handleGameLogic, {
+    (state: GameState, action: GameStateAction) => GameState
+  >(gameLogicReducer, {
     history: createArrayAttributes(9),
     xIsNext: true,
     stepNumber: 0,

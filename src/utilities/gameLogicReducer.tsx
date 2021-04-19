@@ -1,14 +1,14 @@
-import { calculateWinner, createArrayAttributes } from '../utilities/';
+import { calculateWinner, createArrayAttributes } from '.';
 /**
  * Handle game logic
  * @param state
  * @param action
  * @returns
  */
-const handleGameLogic = (
-  state: GameStateProps,
+const gameLogicReducer = (
+  state: GameState,
   action: GameStateAction
-): GameStateProps => {
+): GameState => {
   switch (action.type) {
     // Go to next move
     case 'nextMove': {
@@ -76,4 +76,4 @@ const handleGameLogic = (
   }
 };
 
-export default handleGameLogic;
+export default gameLogicReducer;

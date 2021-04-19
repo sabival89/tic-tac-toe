@@ -6,7 +6,7 @@ type GameHistory = Array<{ squares: Array<string> }>;
 /**
  * Type for game state properties
  */
-type GameStateProps = {
+type GameState = {
   history: GameHistory;
   xIsNext: boolean;
   stepNumber: number;
