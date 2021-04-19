@@ -16,7 +16,7 @@ export const calculateWinner = (squares: Array<string>): WinnerState => {
   ];
 
   for (let i = 0; i < gameBoardLines.length; i++) {
-    const [a, b, c]: Array<number> = gameBoardLines[i];
+    const [a, b, c] = gameBoardLines[i];
 
     if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c])
       return { hasWinner: true, winner: squares[a], winningSquares: [a, b, c] };

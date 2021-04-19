@@ -5,7 +5,7 @@ import { calculateWinner, createArrayAttributes } from '../utilities/';
  * @param action
  * @returns
  */
-const reducer = (
+const handleGameLogic = (
   state: GameStateProps,
   action: GameStateAction
 ): GameStateProps => {
@@ -76,4 +76,4 @@ const reducer = (
   }
 };
 
-export default reducer;
+export default handleGameLogic;
