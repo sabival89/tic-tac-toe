@@ -5,6 +5,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## How To Use
 
 In the project root directory, you can run:
+### `yarn`
 
 ### `yarn start`
 
@@ -16,7 +17,7 @@ You will also see any lint errors in the console.
 
 ### `yarn test`
 
-Launches the test runner in the interactive watch mode.\
+Launches the test runner in the interactive watch mode.
 
 ### `yarn build`
 
