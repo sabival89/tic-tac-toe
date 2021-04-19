@@ -1,0 +1,15 @@
+{
+	"folders": [
+		{
+			"path": "../../../typescript-fundamentals"
+		},
+		{
+			"path": "../.."
+		}
+	],
+	"remoteAuthority": "wsl+Ubuntu",
+	"settings": {
+		"typescript.tsdk": "tic-tac-toe/node_modules/typescript/lib",
+		"editor.formatOnSave": true
+	}
+}
