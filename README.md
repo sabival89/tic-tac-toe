@@ -28,3 +28,5 @@ The build is minified and the filenames include the hashes.\
 The app is ready to be deployed!
 
 # [View Demo](https://fpbju.csb.app/)
+
+![image](https://user-images.githubusercontent.com/2057169/125516825-8e5465d3-14d3-4682-a807-144fb9601850.png)
