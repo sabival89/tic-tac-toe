@@ -56,7 +56,7 @@ const GameInfo: React.FC<GameInfoProps> = ({
 
       <div className="game--info-buttons">
         <button onClick={() => dispatch({ type: 'reset' })}>
-          <span className="game--info-buttons__reset">&#128472;</span>
+          <span className="game--info-buttons__reset">&#8634;</span>
         </button>
         <button name="prevMove" onClick={() => dispatch({ type: 'prevMove' })}>
           <span className="game--info-buttons__prev">&#171;</span>
