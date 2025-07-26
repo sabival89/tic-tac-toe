@@ -1,16 +1,16 @@
-import React from 'react';
-import { isGameOver } from '../utilities';
+import React, { type JSX } from 'react'
+import { isGameOver } from '../utils'
 /**
  * Type properties for Gameinfo Component
  */
 type GameInfoProps = {
-  winner: string | null;
-  stepNumber: number;
-  currentPlayer: string;
-  dispatch: React.Dispatch<GameStateAction>;
-  history: GameHistory;
-  MovesButtons: Array<JSX.Element>;
-};
+  winner: string | null
+  stepNumber: number
+  currentPlayer: string
+  dispatch: React.Dispatch<GameStateAction>
+  history: GameHistory
+  MovesButtons: Array<JSX.Element>
+}
 
 /**
  * Render Game Info and Game toolbar buttons
@@ -29,7 +29,7 @@ const GameInfo: React.FC<GameInfoProps> = ({
    * Determine gameover state
    * @returns BoOlean
    */
-  const isGameOverVal = isGameOver(history, winner);
+  const isGameOverVal = isGameOver(history, winner)
 
   return (
     <div className="game--info">
@@ -72,7 +72,7 @@ const GameInfo: React.FC<GameInfoProps> = ({
         </button>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default GameInfo;
+export default GameInfo

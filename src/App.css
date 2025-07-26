@@ -16,7 +16,11 @@ body {
   margin: 0;
   padding: 0;
   background: rgb(117, 66, 203);
-  font: 14px 'Segoe UI Light', 'Century Gothic', Futura, sans-serif;
+  font:
+    14px 'Segoe UI Light',
+    'Century Gothic',
+    Futura,
+    sans-serif;
 }
 
 /*======================== 
@@ -151,7 +155,7 @@ div.game--info-buttons button {
   color: #ffffff;
   cursor: pointer;
   font-weight: lighter;
-  font-size: 0.8em;
+  font-size: 1em;
   border-right: 0.5px solid rgba(0, 0, 0, 0.1);
 }
 
@@ -188,10 +192,12 @@ div.game--info-buttons
 }
 
 div.game--info-buttons button > span:before {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: absolute;
   opacity: 0;
-  top: -1rem;
-  left: -2rem;
+  top: -2rem;
   padding: 5px 7px;
   color: rgba(255, 255, 255, 0.733);
   background: rgba(0, 0, 0, 0.5);
@@ -199,8 +205,9 @@ div.game--info-buttons button > span:before {
   border-radius: 3px;
   visibility: hidden;
   text-shadow: none;
-  width: 5rem;
+  width: fit-content;
   transition: all 0.1s ease-in;
+  white-space: nowrap !important;
 }
 
 div.game--info-buttons button > span.game--info-buttons__reset:before {
@@ -212,7 +219,7 @@ div.game--info-buttons button > span.game--info-buttons__prev:before {
 }
 div.game--info-buttons button > span.game--info-buttons__next:before {
   content: 'Next Move';
-  left: -4.2rem;
+  right: 0;
 }
 
 div.game--info-buttons button:hover > span:before {
